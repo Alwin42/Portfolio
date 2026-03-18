@@ -1,0 +1,81 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
+
+@theme {
+  --color-red:    #E63946;
+  --color-cream:  #F1FAEE;
+  --color-yellow: #F1C40F;
+  --color-mist:   #D8E2DC;
+  --color-sky:    #A8DADC;
+  --color-steel:  #457B9D;
+  --color-navy:   #1D3557;
+  --color-amber:  #F9C74F;
+  --color-orange: #F3722C;
+  --color-teal:   #2A9D8F;
+
+  --font-display: "Bebas Neue", cursive;
+  --font-body:    "Space Mono", monospace;
+
+  --shadow-brutal:         5px 5px 0px #000000;
+  --shadow-brutal-sm:      3px 3px 0px #000000;
+  --shadow-brutal-lg:      8px 8px 0px #000000;
+  --shadow-brutal-red:     5px 5px 0px #E63946;
+  --shadow-brutal-yellow:  5px 5px 0px #F1C40F;
+
+  --animate-scroll: scroll 20s linear infinite;
+
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-33.33%); }
+  }
+}
+
+@layer base {
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--color-cream);
+    color: var(--color-navy);
+  }
+
+  html { scroll-behavior: smooth; }
+}
+
+@layer components {
+  .btn-brutal {
+    @apply font-bold uppercase tracking-widest text-sm px-6 py-3 border-2 border-black cursor-pointer inline-block transition-all duration-100;
+    box-shadow: var(--shadow-brutal);
+    font-family: var(--font-body);
+  }
+
+  .btn-brutal:hover {
+    @apply translate-x-[3px] translate-y-[3px];
+    box-shadow: none;
+  }
+
+  .card-brutal {
+    @apply border-2 border-black bg-white transition-all duration-100;
+    box-shadow: var(--shadow-brutal);
+  }
+
+  .card-brutal:hover {
+    @apply translate-x-[3px] translate-y-[3px];
+    box-shadow: none;
+  }
+
+  .section-title {
+    @apply text-6xl tracking-wider mb-8;
+    font-family: var(--font-display);
+    color: var(--color-navy);
+  }
+
+  .tag-label {
+    @apply inline-block font-bold uppercase tracking-widest text-xs px-3 py-1 border-2 border-black;
+    font-family: var(--font-body);
+  }
+
+  .shadow-brutal    { box-shadow: var(--shadow-brutal); }
+  .shadow-brutal-sm { box-shadow: var(--shadow-brutal-sm); }
+  .shadow-brutal-lg { box-shadow: var(--shadow-brutal-lg); }
+}
