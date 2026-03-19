@@ -79,3 +79,4 @@
   .shadow-brutal-sm { box-shadow: var(--shadow-brutal-sm); }
   .shadow-brutal-lg { box-shadow: var(--shadow-brutal-lg); }
 }
+html { scroll-behavior: smooth; }
