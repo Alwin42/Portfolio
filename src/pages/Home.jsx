@@ -233,7 +233,7 @@ export default function Home() {
 
         {/* RIGHT — panel */}
         {/* RIGHT — panel */}
-<div className="bg-[#00BFFF] relative flex items-center justify-center overflow-hidden min-h-[600px]">
+<div className="bg-[#00BFFF] relative flex items-center justify-center overflow-hidden min-h-[500px] md:min-h-[calc(100vh-65px)]">
 
   {/* Grid background */}
   <div className="absolute inset-0 opacity-10"
@@ -243,181 +243,246 @@ export default function Home() {
   <div className="absolute inset-0 opacity-[0.05]"
     style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
 
-  {/* ✦ Animated stars */}
-  {[
-    { pos: 'top-5 left-8',    size: 'text-4xl', dur: 3.2, delay: 0 },
-    { pos: 'top-12 right-6',  size: 'text-2xl', dur: 4.1, delay: 0.5 },
-    { pos: 'bottom-16 left-5',size: 'text-3xl', dur: 3.8, delay: 1 },
-    { pos: 'bottom-5 right-12',size:'text-xl',  dur: 5.0, delay: 1.5 },
-  ].map((s, i) => (
-    <motion.span key={i}
-      className={`absolute ${s.pos} ${s.size} font-display text-black/20 select-none z-[1]`}
-      animate={{ y: [0, -8, 0], rotate: [0, 15, 0] }}
-      transition={{ duration: s.dur, repeat: Infinity, ease: 'easeInOut', delay: s.delay }}>
-      ✦
-    </motion.span>
-  ))}
-
-  {/* ── 10+ Projects badge ── */}
+  {/* ── 10+ badge — always visible ── */}
   <motion.div
     initial={{ opacity: 0, scale: 0, rotate: -10 }}
     animate={{ opacity: 1, scale: 1, rotate: -5 }}
     transition={{ delay: 1.2, type: 'spring', stiffness: 200 }}
-    className="absolute top-5 right-5 bg-[#E63946] border-2 border-black flex flex-col items-center justify-center w-16 h-16 z-30"
+    className="absolute top-4 right-4 bg-[#E63946] border-2 border-black flex flex-col items-center justify-center w-14 h-14 md:w-16 md:h-16 z-30"
     style={{ boxShadow: '4px 4px 0 #000' }}>
-    <span className="font-display text-white text-2xl leading-none">10+</span>
-    <span className="text-white/80 text-[8px] font-bold tracking-wider uppercase">Projects</span>
+    <span className="font-display text-white text-xl md:text-2xl leading-none">10+</span>
+    <span className="text-white/80 text-[7px] md:text-[8px] font-bold tracking-wider uppercase">Projects</span>
   </motion.div>
 
-  {/* 1. code.png — top left */}
-  <motion.div
-    initial={{ opacity: 0, x: -60, y: -40 }}
-    animate={{ opacity: 1, x: 0, y: 0 }}
-    transition={{ duration: 0.6, delay: 0.3, type: 'spring', stiffness: 100 }}
-    className="absolute top-12 left-4 z-20"
-    style={{ rotate: '-8deg' }}
-  >
+  {/* ══════════════════════════════════════
+      MOBILE — clean 3-column image grid
+      Hidden on md+ screens
+      ══════════════════════════════════════ */}
+  <div className="md:hidden w-full px-6 py-12">
+    <div className="grid grid-cols-3 gap-3 mb-4">
+      {[
+        { src: meetingImg, label: 'Collab',  rot: '-3deg' },
+        { src: codeImg,    label: 'Code',    rot: '2deg'  },
+        { src: scriptsImg, label: 'Scripts', rot: '-2deg' },
+      ].map((img, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 + i * 0.1 }}
+          style={{ transform: `rotate(${img.rot})` }}
+        >
+          <img src={img.src} alt={img.label}
+            className="w-full object-contain drop-shadow-[3px_3px_0px_rgba(0,0,0,0.5)]" />
+        </motion.div>
+      ))}
+    </div>
+    <div className="grid grid-cols-3 gap-3">
+      {[
+        { src: webImg,   label: 'Web',   rot: '3deg'  },
+        { src: code2Img, label: 'Build', rot: '-2deg' },
+        { src: scaleImg, label: 'Scale', rot: '2deg'  },
+      ].map((img, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 + i * 0.1 }}
+          style={{ transform: `rotate(${img.rot})` }}
+        >
+          <img src={img.src} alt={img.label}
+            className="w-full object-contain drop-shadow-[3px_3px_0px_rgba(0,0,0,0.5)]" />
+        </motion.div>
+      ))}
+    </div>
+
+    {/* Mobile tech badges */}
+    <div className="flex flex-wrap gap-2 justify-center mt-6">
+      {[
+        { label: '⚛ React',  style: { background: '#1D3557', color: '#fff' } },
+        { label: '🐍 Django', style: { background: '#2A9D8F', color: '#fff' } },
+        { label: '⛓ Web3',   style: { background: '#E63946', color: '#fff' } },
+        { label: '🚀 Flask',  style: { background: '#5227FF', color: '#fff' } },
+      ].map((b, i) => (
+        <motion.span
+          key={b.label}
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.8 + i * 0.08, type: 'spring' }}
+          className="tag-label text-[9px]"
+          style={{ boxShadow: '2px 2px 0 #000', ...b.style }}>
+          {b.label}
+        </motion.span>
+      ))}
+    </div>
+  </div>
+
+  {/* ══════════════════════════════════════
+      DESKTOP — floating collage
+      Hidden on mobile, shown on md+
+      ══════════════════════════════════════ */}
+  <div className="hidden md:block w-full h-full relative" style={{ minHeight: '500px' }}>
+
+    {/* ✦ Animated stars */}
+    {[
+      { pos: 'top-5 left-8',     size: 'text-4xl', dur: 3.2, delay: 0 },
+      { pos: 'top-12 right-6',   size: 'text-2xl', dur: 4.1, delay: 0.5 },
+      { pos: 'bottom-16 left-5', size: 'text-3xl', dur: 3.8, delay: 1 },
+      { pos: 'bottom-5 right-12',size: 'text-xl',  dur: 5.0, delay: 1.5 },
+    ].map((s, i) => (
+      <motion.span key={i}
+        className={`absolute ${s.pos} ${s.size} font-display text-black/20 select-none z-[1]`}
+        animate={{ y: [0, -8, 0], rotate: [0, 15, 0] }}
+        transition={{ duration: s.dur, repeat: Infinity, ease: 'easeInOut', delay: s.delay }}>
+        ✦
+      </motion.span>
+    ))}
+
+    {/* 1. code.png — top left */}
     <motion.div
-      animate={{ y: [0, -10, 0], rotate: [-8, -5, -8] }}
-      transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
+      initial={{ opacity: 0, x: -60, y: -40 }}
+      animate={{ opacity: 1, x: 0, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.3, type: 'spring', stiffness: 100 }}
+      className="absolute top-12 left-4 z-20"
+      style={{ rotate: '-8deg' }}
     >
-      <img src={codeImg} alt="Code"
-        className="w-36 object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.5)]" />
+      <motion.div
+        animate={{ y: [0, -10, 0], rotate: [-8, -5, -8] }}
+        transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        <img src={codeImg} alt="Code"
+          className="w-32 lg:w-36 object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.5)]" />
+      </motion.div>
     </motion.div>
-  </motion.div>
 
-  {/* 2. scripts.png — top right */}
-  <motion.div
-    initial={{ opacity: 0, x: 60, y: -40 }}
-    animate={{ opacity: 1, x: 0, y: 0 }}
-    transition={{ duration: 0.6, delay: 0.45, type: 'spring', stiffness: 100 }}
-    className="absolute top-10 right-20 z-20"
-    style={{ rotate: '7deg' }}
-  >
+    {/* 2. scripts.png — top right */}
     <motion.div
-      animate={{ y: [0, -12, 0], rotate: [7, 9, 7] }}
-      transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
+      initial={{ opacity: 0, x: 60, y: -40 }}
+      animate={{ opacity: 1, x: 0, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.45, type: 'spring', stiffness: 100 }}
+      className="absolute top-10 right-20 z-20"
+      style={{ rotate: '7deg' }}
     >
-      <img src={scriptsImg} alt="Scripts"
-        className="w-32 object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.5)]" />
+      <motion.div
+        animate={{ y: [0, -12, 0], rotate: [7, 9, 7] }}
+        transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
+      >
+        <img src={scriptsImg} alt="Scripts"
+          className="w-28 lg:w-32 object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.5)]" />
+      </motion.div>
     </motion.div>
-  </motion.div>
 
-  {/* 3. code2.png — top centre */}
-  <motion.div
-    initial={{ opacity: 0, y: -50 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6, delay: 0.55, type: 'spring', stiffness: 100 }}
-    className="absolute top-4 left-1/2 -translate-x-8 z-[8]"
-    style={{ rotate: '4deg' }}
-  >
+    {/* 3. code2.png — top centre */}
     <motion.div
-      animate={{ y: [0, -7, 0], rotate: [4, 2, 4] }}
-      transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.55, type: 'spring', stiffness: 100 }}
+      className="absolute top-4 left-1/2 -translate-x-8 z-[8]"
+      style={{ rotate: '4deg' }}
     >
-      <img src={code2Img} alt="Code2"
-        className="w-28 object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.5)]" />
+      <motion.div
+        animate={{ y: [0, -7, 0], rotate: [4, 2, 4] }}
+        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
+      >
+        <img src={code2Img} alt="Code2"
+          className="w-24 lg:w-28 object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.5)]" />
+      </motion.div>
     </motion.div>
-  </motion.div>
 
-  {/* 4. web.png — mid left */}
-  <motion.div
-    initial={{ opacity: 0, x: -60 }}
-    animate={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.6, delay: 0.6, type: 'spring', stiffness: 100 }}
-    className="absolute left-2 top-1/2 -translate-y-16 z-[6]"
-    style={{ rotate: '-5deg' }}
-  >
+    {/* 4. web.png — mid left */}
     <motion.div
-      animate={{ y: [0, -9, 0], rotate: [-5, -3, -5] }}
-      transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 0.7 }}
+      initial={{ opacity: 0, x: -60 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.6, delay: 0.6, type: 'spring', stiffness: 100 }}
+      className="absolute left-2 top-1/2 -translate-y-16 z-[6]"
+      style={{ rotate: '-5deg' }}
     >
-      <img src={webImg} alt="Web"
-        className="w-32 object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.5)]" />
+      <motion.div
+        animate={{ y: [0, -9, 0], rotate: [-5, -3, -5] }}
+        transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 0.7 }}
+      >
+        <img src={webImg} alt="Web"
+          className="w-28 lg:w-32 object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.5)]" />
+      </motion.div>
     </motion.div>
-  </motion.div>
 
-  {/* 5. CENTRE — meeting.png — largest, front */}
-  <motion.div
-    initial={{ opacity: 0, scale: 0.7, y: 40 }}
-    animate={{ opacity: 1, scale: 1, y: 0 }}
-    transition={{ duration: 0.8, delay: 0.2, type: 'spring', stiffness: 80 }}
-    className="relative z-10"
-    style={{ rotate: '-2deg' }}
-  >
+    {/* 5. CENTRE — meeting.png — biggest */}
     <motion.div
-      animate={{ y: [0, -8, 0], rotate: [-2, -1, -2] }}
-      transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
+      initial={{ opacity: 0, scale: 0.7, y: 40 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 0.2, type: 'spring', stiffness: 80 }}
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
+      style={{ rotate: '-2deg' }}
     >
-      <img src={meetingImg} alt="Developer"
-        className="w-72 md:w-80 object-contain drop-shadow-[8px_8px_0px_rgba(0,0,0,0.6)]" />
+      <motion.div
+        animate={{ y: [0, -8, 0], rotate: [-2, -1, -2] }}
+        transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        <img src={meetingImg} alt="Developer"
+          className="w-56 lg:w-72 object-contain drop-shadow-[8px_8px_0px_rgba(0,0,0,0.6)]" />
+      </motion.div>
     </motion.div>
-  </motion.div>
 
-  {/* 6. heroImg — bottom left */}
-  <motion.div
-    initial={{ opacity: 0, x: -40, y: 60 }}
-    animate={{ opacity: 1, x: 0, y: 0 }}
-    transition={{ duration: 0.6, delay: 0.7, type: 'spring', stiffness: 100 }}
-    className="absolute bottom-8 left-4 z-20"
-    style={{ rotate: '6deg' }}
-  >
+    {/* 6. heroImg — bottom left */}
     <motion.div
-      animate={{ y: [0, -11, 0], rotate: [0, 0, 1] }}
-      transition={{ duration: 3.9, repeat: Infinity, ease: 'easeInOut', delay: 1.8 }}
+      initial={{ opacity: 0, x: -40, y: 60 }}
+      animate={{ opacity: 1, x: 0, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.7, type: 'spring', stiffness: 100 }}
+      className="absolute bottom-8 left-4 z-20"
+      style={{ rotate: '6deg' }}
     >
-      <img src={heroImg} alt="Hero"
-        className="w-66 object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.5)]" />
+      <motion.div
+        animate={{ y: [0, -11, 0], rotate: [6, 4, 6] }}
+        transition={{ duration: 3.9, repeat: Infinity, ease: 'easeInOut', delay: 1.8 }}
+      >
+        <img src={heroImg} alt="Hero"
+          className="w-28 lg:w-36 object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.5)]" />
+      </motion.div>
     </motion.div>
-  </motion.div>
 
-  {/* 7. scale.png — bottom right */}
-  <motion.div
-    initial={{ opacity: 0, x: 40, y: 60 }}
-    animate={{ opacity: 1, x: 0, y: 0 }}
-    transition={{ duration: 0.6, delay: 0.8, type: 'spring', stiffness: 100 }}
-    className="absolute bottom-6 right-3 z-20"
-    style={{ rotate: '-7deg' }}
-  >
+    {/* 7. scale.png — bottom right */}
     <motion.div
-      animate={{ y: [0, -10, 0], rotate: [-7, -5, -7] }}
-      transition={{ duration: 4.4, repeat: Infinity, ease: 'easeInOut', delay: 0.9 }}
+      initial={{ opacity: 0, x: 40, y: 60 }}
+      animate={{ opacity: 1, x: 0, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.8, type: 'spring', stiffness: 100 }}
+      className="absolute bottom-6 right-3 z-20"
+      style={{ rotate: '-7deg' }}
     >
-      <img src={scaleImg} alt="Scale"
-        className="w-32 object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.5)]" />
+      <motion.div
+        animate={{ y: [0, -10, 0], rotate: [-7, -5, -7] }}
+        transition={{ duration: 4.4, repeat: Infinity, ease: 'easeInOut', delay: 0.9 }}
+      >
+        <img src={scaleImg} alt="Scale"
+          className="w-28 lg:w-32 object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.5)]" />
+      </motion.div>
     </motion.div>
-  </motion.div>
 
-  {/* ── SVG dashed connecting lines ── */}
-  <svg className="absolute inset-0 w-full h-full z-[2] pointer-events-none" style={{ opacity: 0.07 }}>
-    <line x1="20%" y1="30%" x2="50%" y2="50%" stroke="#000" strokeWidth="1.5" strokeDasharray="4 4" />
-    <line x1="80%" y1="25%" x2="50%" y2="50%" stroke="#000" strokeWidth="1.5" strokeDasharray="4 4" />
-    <line x1="15%" y1="70%" x2="50%" y2="50%" stroke="#000" strokeWidth="1.5" strokeDasharray="4 4" />
-    <line x1="80%" y1="75%" x2="50%" y2="50%" stroke="#000" strokeWidth="1.5" strokeDasharray="4 4" />
-  </svg>
+    {/* SVG dashed connecting lines */}
+    <svg className="absolute inset-0 w-full h-full z-[2] pointer-events-none" style={{ opacity: 0.07 }}>
+      <line x1="20%" y1="30%" x2="50%" y2="50%" stroke="#000" strokeWidth="1.5" strokeDasharray="4 4" />
+      <line x1="80%" y1="25%" x2="50%" y2="50%" stroke="#000" strokeWidth="1.5" strokeDasharray="4 4" />
+      <line x1="15%" y1="70%" x2="50%" y2="50%" stroke="#000" strokeWidth="1.5" strokeDasharray="4 4" />
+      <line x1="80%" y1="75%" x2="50%" y2="50%" stroke="#000" strokeWidth="1.5" strokeDasharray="4 4" />
+    </svg>
 
-  {/* ── Tech badges ── */}
-  {[
-    { label: '⚛ React',  style: { background: '#1D3557', color: '#fff' }, pos: 'bottom-42 right-30',  delay: 1.0 },
-    { label: 'Vue ',  style: { background: '#089116', color: '#fff' }, pos: 'bottom-62 right-30',  delay: 1.0 },
-    { label: 'Tailwind CSS',  style: { background: '#0658fa', color: '#fff' }, pos: 'top-78 right-45',  delay: 1.0 },
-    { label: '🐍 Django', style: { background: '#2A9D8F', color: '#fff' }, pos: 'top-30 left-50',     delay: 1.1 },
-    { label: 'FAST API', style: { background: '#26fb00', color: '#fff' }, pos: 'top-60 left-30',     delay: 1.1 },
-    { label: '⛓ Web3',   style: { background: '#E63946', color: '#fff' }, pos: 'bottom-58 left-32',  delay: 1.2 },
-    { label: 'Solidity',   style: { background: '#d66b00', color: '#fff' }, pos: 'bottom-38 left-72',  delay: 1.2 },
-
-    { label: '🚀 Flask',  style: { background: '#5227FF', color: '#fff' }, pos: 'top-60 right-20',    delay: 1.3 },
-  ].map((b) => (
-    <motion.span key={b.label}
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{ opacity: 1, scale: 1.5 }}
-      transition={{ delay: b.delay, type: 'spring', stiffness: 200 }}
-      whileHover={{ scale: 1.1, rotate: -3 }}
-      className={`absolute ${b.pos} tag-label z-40 text-[9px] cursor-default`}
-      style={{ boxShadow: '3px 3px 0 #000', ...b.style }}>
-      {b.label}
-    </motion.span>
-  ))}
+    {/* Tech badges */}
+    {[
+      { label: '⚛ React',  style: { background: '#1D3557', color: '#fff' }, pos: 'bottom-28 right-3',  delay: 1.0 },
+      { label: '🐍 Django', style: { background: '#2A9D8F', color: '#fff' }, pos: 'top-40 right-3',     delay: 1.1 },
+      { label: '⛓ Web3',   style: { background: '#E63946', color: '#fff' }, pos: 'bottom-24 left-32',  delay: 1.2 },
+      { label: '🚀 Flask',  style: { background: '#5227FF', color: '#fff' }, pos: 'top-1/2 right-2',    delay: 1.3 },
+    ].map((b) => (
+      <motion.span key={b.label}
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: b.delay, type: 'spring', stiffness: 200 }}
+        whileHover={{ scale: 1.1, rotate: -3 }}
+        className={`absolute ${b.pos} tag-label z-30 text-[9px] cursor-default`}
+        style={{ boxShadow: '3px 3px 0 #000', ...b.style }}>
+        {b.label}
+      </motion.span>
+    ))}
+  </div>
 
 </div>
       </section>
