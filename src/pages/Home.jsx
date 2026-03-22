@@ -6,7 +6,12 @@ import {
   ExternalLink, ChevronDown, Briefcase, GraduationCap, Trophy ,MonitorCog ,GitBranch,
 } from 'lucide-react'
 import heroImg from '../assets/hero-illustration.png'
-
+import codeImg    from '../assets/code.png'
+import code2Img   from '../assets/code2.png'
+import meetingImg from '../assets/meeting.png'
+import scaleImg   from '../assets/scale.png'
+import scriptsImg from '../assets/scripts.png'
+import webImg     from '../assets/web.png'
 // ── React Bits imports ────────────────────────
 import SplitText      from '../components/Split-Text'
 import BlurText       from '../components/Blur-Text'
@@ -78,9 +83,9 @@ const skillCategories = [
 ]
 
 const socials = [
-  { icon: <Github size={18} />,   href: 'https://github.com',   label: 'GitHub' },
-  { icon: <Linkedin size={18} />, href: 'https://linkedin.com', label: 'LinkedIn' },
-  { icon: <Mail size={18} />,     href: 'mailto:alwin@dev.com', label: 'Email' },
+  { icon: <Github size={18} />,   href: 'https://github.com/Alwin42',   label: 'GitHub' },
+  { icon: <Linkedin size={18} />, href: 'https://www.linkedin.com/in/alwin-emmanuel-sebastian/', label: 'LinkedIn' },
+  { icon: <Mail size={18} />,     href: 'mailto:alwinemmanuel424@gmail.com', label: 'Email' },
 ]
 
 const experience = [
@@ -114,7 +119,7 @@ export default function Home() {
       <section className="grid md:grid-cols-2 min-h-[calc(100vh-65px)]">
 
         {/* LEFT — Red panel */}
-        <div className="bg-[#E63946] flex flex-col justify-center px-10 md:px-16 py-20 border-r-2 border-black relative overflow-hidden">
+        <div className="bg-[#8A2BE2] flex flex-col justify-center px-10 md:px-16 py-20 border-r-2 border-black relative overflow-hidden">
           {/* Dot texture */}
           <div className="absolute inset-0 opacity-5"
             style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
@@ -226,49 +231,195 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* RIGHT — Yellow panel */}
-        <div className="bg-[#F1C40F] relative flex items-center justify-center p-8 overflow-hidden">
-          <div className="absolute inset-0 opacity-10"
-            style={{ backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+        {/* RIGHT — panel */}
+        {/* RIGHT — panel */}
+<div className="bg-[#00BFFF] relative flex items-center justify-center overflow-hidden min-h-[600px]">
 
-          {['absolute top-8 left-8 text-5xl text-black/20', 'absolute top-16 right-12 text-3xl text-black/15',
-            'absolute bottom-28 left-10 text-4xl text-black/20', 'absolute bottom-8 right-8 text-2xl text-black/15',
-          ].map((cls, i) => <span key={i} className={`${cls} font-display select-none`}>✦</span>)}
+  {/* Grid background */}
+  <div className="absolute inset-0 opacity-10"
+    style={{ backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 
-          <motion.div initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4, type: 'spring' }}
-            className="absolute top-8 right-8 bg-[#E63946] border-2 border-black flex flex-col items-center justify-center w-16 h-16 z-10"
-            style={{ boxShadow: '4px 4px 0 #000' }}>
-            <span className="font-display text-white text-2xl leading-none">10+</span>
-            <span className="text-white/80 text-[8px] font-bold tracking-wider uppercase">Projects</span>
-          </motion.div>
+  {/* Dot texture */}
+  <div className="absolute inset-0 opacity-[0.05]"
+    style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
 
-          <motion.div initial={{ opacity: 0, y: 30, rotate: -2 }} animate={{ opacity: 1, y: 0, rotate: -2 }}
-            transition={{ duration: 0.7, delay: 0.3 }} className="relative z-10">
-            <div className="border-4 border-black bg-white p-2" style={{ boxShadow: '8px 8px 0 #000' }}>
-              <img src={heroImg} alt="Developer illustration"
-                className="w-72 md:w-80 object-contain block"
-                onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex' }} />
-              <div className="w-72 md:w-80 h-64 bg-[#1D3557] hidden items-center justify-center flex-col gap-3">
-                <Code2 size={48} className="text-[#F1C40F]" />
-                <span className="font-display text-white text-xl tracking-widest">FULL STACK</span>
-              </div>
-            </div>
-          </motion.div>
+  {/* ✦ Animated stars */}
+  {[
+    { pos: 'top-5 left-8',    size: 'text-4xl', dur: 3.2, delay: 0 },
+    { pos: 'top-12 right-6',  size: 'text-2xl', dur: 4.1, delay: 0.5 },
+    { pos: 'bottom-16 left-5',size: 'text-3xl', dur: 3.8, delay: 1 },
+    { pos: 'bottom-5 right-12',size:'text-xl',  dur: 5.0, delay: 1.5 },
+  ].map((s, i) => (
+    <motion.span key={i}
+      className={`absolute ${s.pos} ${s.size} font-display text-black/20 select-none z-[1]`}
+      animate={{ y: [0, -8, 0], rotate: [0, 15, 0] }}
+      transition={{ duration: s.dur, repeat: Infinity, ease: 'easeInOut', delay: s.delay }}>
+      ✦
+    </motion.span>
+  ))}
 
-          {[
-            { label: 'React',  color: 'bg-[#1D3557] text-white', pos: 'absolute bottom-20 left-6',  delay: 0.8 },
-            { label: 'Django', color: 'bg-[#2A9D8F] text-white', pos: 'absolute top-24 left-4',     delay: 0.9 },
-            { label: 'Web3',   color: 'bg-[#E63946] text-white', pos: 'absolute bottom-8 left-24',  delay: 1.0 },
-          ].map((b) => (
-            <motion.span key={b.label} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: b.delay }}
-              className={`${b.pos} ${b.color} tag-label z-20`}
-              style={{ boxShadow: '3px 3px 0 #000' }}>
-              {b.label}
-            </motion.span>
-          ))}
-        </div>
+  {/* ── 10+ Projects badge ── */}
+  <motion.div
+    initial={{ opacity: 0, scale: 0, rotate: -10 }}
+    animate={{ opacity: 1, scale: 1, rotate: -5 }}
+    transition={{ delay: 1.2, type: 'spring', stiffness: 200 }}
+    className="absolute top-5 right-5 bg-[#E63946] border-2 border-black flex flex-col items-center justify-center w-16 h-16 z-30"
+    style={{ boxShadow: '4px 4px 0 #000' }}>
+    <span className="font-display text-white text-2xl leading-none">10+</span>
+    <span className="text-white/80 text-[8px] font-bold tracking-wider uppercase">Projects</span>
+  </motion.div>
+
+  {/* 1. code.png — top left */}
+  <motion.div
+    initial={{ opacity: 0, x: -60, y: -40 }}
+    animate={{ opacity: 1, x: 0, y: 0 }}
+    transition={{ duration: 0.6, delay: 0.3, type: 'spring', stiffness: 100 }}
+    className="absolute top-12 left-4 z-20"
+    style={{ rotate: '-8deg' }}
+  >
+    <motion.div
+      animate={{ y: [0, -10, 0], rotate: [-8, -5, -8] }}
+      transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
+    >
+      <img src={codeImg} alt="Code"
+        className="w-36 object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.5)]" />
+    </motion.div>
+  </motion.div>
+
+  {/* 2. scripts.png — top right */}
+  <motion.div
+    initial={{ opacity: 0, x: 60, y: -40 }}
+    animate={{ opacity: 1, x: 0, y: 0 }}
+    transition={{ duration: 0.6, delay: 0.45, type: 'spring', stiffness: 100 }}
+    className="absolute top-10 right-20 z-20"
+    style={{ rotate: '7deg' }}
+  >
+    <motion.div
+      animate={{ y: [0, -12, 0], rotate: [7, 9, 7] }}
+      transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
+    >
+      <img src={scriptsImg} alt="Scripts"
+        className="w-32 object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.5)]" />
+    </motion.div>
+  </motion.div>
+
+  {/* 3. code2.png — top centre */}
+  <motion.div
+    initial={{ opacity: 0, y: -50 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6, delay: 0.55, type: 'spring', stiffness: 100 }}
+    className="absolute top-4 left-1/2 -translate-x-8 z-[8]"
+    style={{ rotate: '4deg' }}
+  >
+    <motion.div
+      animate={{ y: [0, -7, 0], rotate: [4, 2, 4] }}
+      transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
+    >
+      <img src={code2Img} alt="Code2"
+        className="w-28 object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.5)]" />
+    </motion.div>
+  </motion.div>
+
+  {/* 4. web.png — mid left */}
+  <motion.div
+    initial={{ opacity: 0, x: -60 }}
+    animate={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.6, delay: 0.6, type: 'spring', stiffness: 100 }}
+    className="absolute left-2 top-1/2 -translate-y-16 z-[6]"
+    style={{ rotate: '-5deg' }}
+  >
+    <motion.div
+      animate={{ y: [0, -9, 0], rotate: [-5, -3, -5] }}
+      transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 0.7 }}
+    >
+      <img src={webImg} alt="Web"
+        className="w-32 object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.5)]" />
+    </motion.div>
+  </motion.div>
+
+  {/* 5. CENTRE — meeting.png — largest, front */}
+  <motion.div
+    initial={{ opacity: 0, scale: 0.7, y: 40 }}
+    animate={{ opacity: 1, scale: 1, y: 0 }}
+    transition={{ duration: 0.8, delay: 0.2, type: 'spring', stiffness: 80 }}
+    className="relative z-10"
+    style={{ rotate: '-2deg' }}
+  >
+    <motion.div
+      animate={{ y: [0, -8, 0], rotate: [-2, -1, -2] }}
+      transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
+    >
+      <img src={meetingImg} alt="Developer"
+        className="w-72 md:w-80 object-contain drop-shadow-[8px_8px_0px_rgba(0,0,0,0.6)]" />
+    </motion.div>
+  </motion.div>
+
+  {/* 6. heroImg — bottom left */}
+  <motion.div
+    initial={{ opacity: 0, x: -40, y: 60 }}
+    animate={{ opacity: 1, x: 0, y: 0 }}
+    transition={{ duration: 0.6, delay: 0.7, type: 'spring', stiffness: 100 }}
+    className="absolute bottom-8 left-4 z-20"
+    style={{ rotate: '6deg' }}
+  >
+    <motion.div
+      animate={{ y: [0, -11, 0], rotate: [0, 0, 1] }}
+      transition={{ duration: 3.9, repeat: Infinity, ease: 'easeInOut', delay: 1.8 }}
+    >
+      <img src={heroImg} alt="Hero"
+        className="w-66 object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.5)]" />
+    </motion.div>
+  </motion.div>
+
+  {/* 7. scale.png — bottom right */}
+  <motion.div
+    initial={{ opacity: 0, x: 40, y: 60 }}
+    animate={{ opacity: 1, x: 0, y: 0 }}
+    transition={{ duration: 0.6, delay: 0.8, type: 'spring', stiffness: 100 }}
+    className="absolute bottom-6 right-3 z-20"
+    style={{ rotate: '-7deg' }}
+  >
+    <motion.div
+      animate={{ y: [0, -10, 0], rotate: [-7, -5, -7] }}
+      transition={{ duration: 4.4, repeat: Infinity, ease: 'easeInOut', delay: 0.9 }}
+    >
+      <img src={scaleImg} alt="Scale"
+        className="w-32 object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.5)]" />
+    </motion.div>
+  </motion.div>
+
+  {/* ── SVG dashed connecting lines ── */}
+  <svg className="absolute inset-0 w-full h-full z-[2] pointer-events-none" style={{ opacity: 0.07 }}>
+    <line x1="20%" y1="30%" x2="50%" y2="50%" stroke="#000" strokeWidth="1.5" strokeDasharray="4 4" />
+    <line x1="80%" y1="25%" x2="50%" y2="50%" stroke="#000" strokeWidth="1.5" strokeDasharray="4 4" />
+    <line x1="15%" y1="70%" x2="50%" y2="50%" stroke="#000" strokeWidth="1.5" strokeDasharray="4 4" />
+    <line x1="80%" y1="75%" x2="50%" y2="50%" stroke="#000" strokeWidth="1.5" strokeDasharray="4 4" />
+  </svg>
+
+  {/* ── Tech badges ── */}
+  {[
+    { label: '⚛ React',  style: { background: '#1D3557', color: '#fff' }, pos: 'bottom-42 right-30',  delay: 1.0 },
+    { label: 'Vue ',  style: { background: '#089116', color: '#fff' }, pos: 'bottom-62 right-30',  delay: 1.0 },
+    { label: 'Tailwind CSS',  style: { background: '#0658fa', color: '#fff' }, pos: 'top-78 right-45',  delay: 1.0 },
+    { label: '🐍 Django', style: { background: '#2A9D8F', color: '#fff' }, pos: 'top-30 left-50',     delay: 1.1 },
+    { label: 'FAST API', style: { background: '#26fb00', color: '#fff' }, pos: 'top-60 left-30',     delay: 1.1 },
+    { label: '⛓ Web3',   style: { background: '#E63946', color: '#fff' }, pos: 'bottom-58 left-32',  delay: 1.2 },
+    { label: 'Solidity',   style: { background: '#d66b00', color: '#fff' }, pos: 'bottom-38 left-72',  delay: 1.2 },
+
+    { label: '🚀 Flask',  style: { background: '#5227FF', color: '#fff' }, pos: 'top-60 right-20',    delay: 1.3 },
+  ].map((b) => (
+    <motion.span key={b.label}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1.5 }}
+      transition={{ delay: b.delay, type: 'spring', stiffness: 200 }}
+      whileHover={{ scale: 1.1, rotate: -3 }}
+      className={`absolute ${b.pos} tag-label z-40 text-[9px] cursor-default`}
+      style={{ boxShadow: '3px 3px 0 #000', ...b.style }}>
+      {b.label}
+    </motion.span>
+  ))}
+
+</div>
       </section>
 
       {/* ── SCROLL VELOCITY MARQUEE ───────────────── */}
