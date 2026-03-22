@@ -52,8 +52,8 @@ const fadeUp = (delay = 0) => ({
 })
 
 export default function Contact() {
-  const formRef = useRef()
-  const [status, setStatus] = useState('idle') // idle | sending | sent | error
+  const formRef  = useRef()
+  const [status, setStatus]   = useState('idle')
   const [focused, setFocused] = useState(null)
 
   const handleSubmit = async (e) => {
@@ -61,24 +61,32 @@ export default function Contact() {
     setStatus('sending')
     try {
       await emailjs.sendForm(
-        'YOUR_SERVICE_ID',
-        'YOUR_TEMPLATE_ID',
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         formRef.current,
-        'YOUR_PUBLIC_KEY'
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       )
       setStatus('sent')
       formRef.current.reset()
-    } catch {
+    } catch (err) {
+      console.error('EmailJS error:', err)
       setStatus('error')
     }
   }
+
+  const inputStyle = (field) => ({
+    borderColor: focused === field ? '#7cff67' : 'rgba(255,255,255,0.1)',
+    boxShadow:   focused === field ? '4px 4px 0 #7cff67' : '4px 4px 0 rgba(255,255,255,0.05)',
+  })
+
+  const inputClass = "w-full border-2 px-4 py-3 font-body text-sm bg-[#0a0a0a] text-white placeholder:text-white/20 focus:outline-none transition-all duration-150"
 
   return (
     <main className="bg-black min-h-screen">
 
       {/* ── HEADER ─────────────────────────────── */}
       <div className="relative overflow-hidden border-b-4 border-[#7cff67]">
-        {/* Aurora background */}
+
         <div className="absolute inset-0 z-0">
           <Aurora
             colorStops={['#7cff67', '#B19EEF', '#5227FF']}
@@ -92,6 +100,7 @@ export default function Contact() {
           style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 py-20">
+
           <motion.div {...fadeUp(0)}>
             <span className="tag-label bg-black text-[#7cff67] mb-6 inline-flex items-center gap-2"
               style={{ boxShadow: '3px 3px 0 #7cff67', border: '2px solid #7cff67' }}>
@@ -106,8 +115,13 @@ export default function Contact() {
             </h1>
             <h1 className="font-display leading-none mb-6"
               style={{ fontSize: 'clamp(52px, 9vw, 110px)', color: '#7cff67', textShadow: '6px 6px 0 #5227FF' }}>
-              <ShinyText text="TOGETHER." disabled={false} speed={3}
-                className="font-display" style={{ fontSize: 'inherit', color: '#7cff67' }} />
+              <ShinyText
+                text="TOGETHER."
+                disabled={false}
+                speed={3}
+                className="font-display"
+                style={{ fontSize: 'inherit', color: '#7cff67' }}
+              />
             </h1>
           </motion.div>
 
@@ -117,14 +131,14 @@ export default function Contact() {
             I typically respond within 24 hours. Let's make something unforgettable.
           </motion.p>
 
-          {/* Quick info strip */}
           <motion.div {...fadeUp(0.3)} className="flex flex-wrap gap-4 mt-8">
             {[
-              { icon: <MapPin size={12} />, text: 'Kerala, India' },
-              { icon: <Clock size={12} />,  text: 'IST (UTC+5:30)' },
-              { icon: <CheckCircle size={12} />, text: 'Open to Internships' },
+              { icon: <MapPin size={12} />,    text: 'Kerala, India' },
+              { icon: <Clock size={12} />,      text: 'IST (UTC+5:30)' },
+              { icon: <CheckCircle size={12} />,text: 'Open to Internships' },
             ].map((item, i) => (
-              <span key={i} className="flex items-center gap-1.5 font-body text-[10px] font-bold uppercase tracking-widest text-white/40">
+              <span key={i}
+                className="flex items-center gap-1.5 font-body text-[10px] font-bold uppercase tracking-widest text-white/40">
                 <span className="text-[#7cff67]">{item.icon}</span>
                 {item.text}
               </span>
@@ -136,7 +150,7 @@ export default function Contact() {
       {/* ── MAIN CONTENT ───────────────────────── */}
       <div className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12">
 
-        {/* ── LEFT — Socials ── */}
+        {/* LEFT — Socials */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -161,19 +175,17 @@ export default function Contact() {
                 className="flex items-center border-2 border-white/10 bg-[#0a0a0a] group transition-all duration-150 overflow-hidden"
                 style={{ boxShadow: `4px 4px 0 ${s.shadow}` }}
               >
-                {/* Icon block */}
                 <div className={`${s.color} border-r-2 border-black px-5 py-5 flex-shrink-0 flex items-center justify-center`}>
                   <span className="text-white">{s.icon}</span>
                 </div>
-
-                {/* Label + value */}
                 <div className="px-5 flex-1 min-w-0">
-                  <p className="font-body font-bold text-[9px] uppercase tracking-widest text-white/40 mb-0.5">{s.label}</p>
+                  <p className="font-body font-bold text-[9px] uppercase tracking-widest text-white/40 mb-0.5">
+                    {s.label}
+                  </p>
                   <p className="font-body text-xs text-white truncate">{s.value}</p>
                 </div>
-
-                {/* Arrow */}
-                <ArrowRight size={14} className="mr-4 text-white/20 group-hover:text-[#7cff67] transition-colors flex-shrink-0" />
+                <ArrowRight size={14}
+                  className="mr-4 text-white/20 group-hover:text-[#7cff67] transition-colors flex-shrink-0" />
               </motion.a>
             ))}
           </div>
@@ -183,7 +195,7 @@ export default function Contact() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.7 }}
-            className="border-2 border-black p-5 inline-block relative overflow-hidden"
+            className="border-2 border-black p-5 inline-block"
             style={{ background: '#7cff67', boxShadow: '5px 5px 0 #5227FF' }}
           >
             <div className="flex items-center gap-3">
@@ -194,7 +206,7 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Second email */}
+          {/* Alternate email */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -206,7 +218,7 @@ export default function Contact() {
           </motion.div>
         </motion.div>
 
-        {/* ── RIGHT — Form ── */}
+        {/* RIGHT — Form */}
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -227,14 +239,11 @@ export default function Contact() {
               <input
                 name="user_name"
                 required
-                placeholder="Alwin Emmanuel"
+                placeholder="Your full name"
                 onFocus={() => setFocused('name')}
                 onBlur={() => setFocused(null)}
-                className="w-full border-2 px-4 py-3 font-body text-sm bg-[#0a0a0a] text-white placeholder:text-white/20 focus:outline-none transition-all duration-150"
-                style={{
-                  borderColor: focused === 'name' ? '#7cff67' : 'rgba(255,255,255,0.1)',
-                  boxShadow: focused === 'name' ? '4px 4px 0 #7cff67' : '4px 4px 0 rgba(255,255,255,0.05)',
-                }}
+                className={inputClass}
+                style={inputStyle('name')}
               />
             </div>
 
@@ -250,11 +259,8 @@ export default function Contact() {
                 placeholder="you@example.com"
                 onFocus={() => setFocused('email')}
                 onBlur={() => setFocused(null)}
-                className="w-full border-2 px-4 py-3 font-body text-sm bg-[#0a0a0a] text-white placeholder:text-white/20 focus:outline-none transition-all duration-150"
-                style={{
-                  borderColor: focused === 'email' ? '#7cff67' : 'rgba(255,255,255,0.1)',
-                  boxShadow: focused === 'email' ? '4px 4px 0 #7cff67' : '4px 4px 0 rgba(255,255,255,0.05)',
-                }}
+                className={inputClass}
+                style={inputStyle('email')}
               />
             </div>
 
@@ -269,11 +275,8 @@ export default function Contact() {
                 placeholder="Project Collaboration / Internship / Just Saying Hi"
                 onFocus={() => setFocused('subject')}
                 onBlur={() => setFocused(null)}
-                className="w-full border-2 px-4 py-3 font-body text-sm bg-[#0a0a0a] text-white placeholder:text-white/20 focus:outline-none transition-all duration-150"
-                style={{
-                  borderColor: focused === 'subject' ? '#7cff67' : 'rgba(255,255,255,0.1)',
-                  boxShadow: focused === 'subject' ? '4px 4px 0 #7cff67' : '4px 4px 0 rgba(255,255,255,0.05)',
-                }}
+                className={inputClass}
+                style={inputStyle('subject')}
               />
             </div>
 
@@ -289,36 +292,33 @@ export default function Contact() {
                 placeholder="Tell me about your project, idea, or opportunity..."
                 onFocus={() => setFocused('message')}
                 onBlur={() => setFocused(null)}
-                className="w-full border-2 px-4 py-3 font-body text-sm bg-[#0a0a0a] text-white placeholder:text-white/20 focus:outline-none transition-all duration-150 resize-none"
-                style={{
-                  borderColor: focused === 'message' ? '#7cff67' : 'rgba(255,255,255,0.1)',
-                  boxShadow: focused === 'message' ? '4px 4px 0 #7cff67' : '4px 4px 0 rgba(255,255,255,0.05)',
-                }}
+                className={`${inputClass} resize-none`}
+                style={inputStyle('message')}
               />
             </div>
 
-            {/* Submit */}
+            {/* Submit button */}
             <ClickSpark sparkColor="#7cff67" sparkSize={8} sparkRadius={24} sparkCount={10}>
               <button
                 type="submit"
                 disabled={status === 'sending' || status === 'sent'}
                 className="btn-brutal flex items-center gap-3 self-start disabled:opacity-60 transition-all"
                 style={{
-                  background: status === 'sent' ? '#7cff67' : '#E63946',
-                  color: status === 'sent' ? '#000' : '#fff',
-                  boxShadow: status === 'sent' ? '5px 5px 0 #5227FF' : '5px 5px 0 #000',
+                  background:  status === 'sent' ? '#7cff67' : '#E63946',
+                  color:       status === 'sent' ? '#000'    : '#fff',
+                  boxShadow:   status === 'sent' ? '5px 5px 0 #5227FF' : '5px 5px 0 #000',
                   border: '2px solid #000',
                   padding: '12px 24px',
                 }}
               >
-                {status === 'idle'    && <><Send size={15} /> Send Message</>}
+                {status === 'idle'    && <><Send size={15} />    Send Message</>}
                 {status === 'sending' && <><Loader size={15} className="animate-spin" /> Sending...</>}
                 {status === 'sent'    && <><CheckCircle size={15} /> Message Sent!</>}
-                {status === 'error'   && <><XCircle size={15} /> Try Again</>}
+                {status === 'error'   && <><XCircle size={15} />  Try Again</>}
               </button>
             </ClickSpark>
 
-            {/* Status messages */}
+            {/* Success message */}
             {status === 'sent' && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -332,6 +332,7 @@ export default function Contact() {
               </motion.div>
             )}
 
+            {/* Error message */}
             {status === 'error' && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -349,7 +350,7 @@ export default function Contact() {
         </motion.div>
       </div>
 
-      {/* ── BOTTOM CTA STRIP ───────────────────── */}
+      {/* ── FOOTER STRIP ───────────────────────── */}
       <section className="border-t-2 border-white/10 py-12 px-6">
         <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-6">
           <div>
@@ -360,10 +361,15 @@ export default function Contact() {
           </div>
           <div className="flex gap-3">
             {socials.map((s, i) => (
-              <motion.a key={i} href={s.href} target="_blank" rel="noreferrer"
+              <motion.a
+                key={i}
+                href={s.href}
+                target="_blank"
+                rel="noreferrer"
                 whileHover={{ y: -3, rotate: -5 }}
                 className={`${s.color} border-2 border-black w-10 h-10 flex items-center justify-center text-white`}
-                style={{ boxShadow: '3px 3px 0 #000' }}>
+                style={{ boxShadow: '3px 3px 0 #000' }}
+              >
                 {s.icon}
               </motion.a>
             ))}
