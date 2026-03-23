@@ -97,8 +97,8 @@ function ProjectCard({ p, i }) {
       whileHover={{ y: -6, rotate: 0.5 }}
     >
       <SpotlightCard
-        spotlightColor={`${st.glow}22`}
-        className="border-2 border-white/10 bg-[#0a0a0a] flex flex-col h-full group cursor-default"
+        spotlightColor={`${st.glow}42`}
+        className="border-2 border-white/5 bg-gray-900 flex flex-col h-full group cursor-default"
         style={{ boxShadow: `6px 6px 0 ${st.glow}` }}
       >
         {/* Numbered header */}
@@ -142,8 +142,8 @@ function HackathonCard({ p, i }) {
       whileHover={{ y: -6 }}
     >
       <SpotlightCard
-        spotlightColor="rgba(230,57,70,0.18)"
-        className="border-2 border-white/10 bg-[#0a0a0a] flex flex-col h-full"
+        spotlightColor="rgba(255, 135, 145, 0.18)"
+        className="border-2 border-white/10 bg-gray-900 flex flex-col h-full"
         style={{ boxShadow: '6px 6px 0 #E63946' }}
       >
         <div className={`${p.color} border-b-2 border-black p-5 relative overflow-hidden`}>
@@ -342,9 +342,9 @@ export default function Projects() {
       {/* ── SCROLL VELOCITY between header and tabs */}
       <div className="bg-black border-b-2 border-white/10 overflow-hidden">
         <ScrollVelocity
-          texts={['100 PROJECTS · HACKATHONS · COLLEGE PROJECTS · OPEN SOURCE · WEB3 · BLOCKCHAIN · FULL STACK · ']}
+          texts={['100 PROJECTS · HACKATHONS · COLLEGE PROJECTS · OPEN SOURCE · WEB3 · BLOCKCHAIN · FULL STACK · TINKERHUB · GITHUB ·']}
           velocity={60}
-          className="font-display text-white/20 tracking-widest text-lg py-2"
+          className="font-display text-white/60 tracking-widest text-lg py-2"
         />
       </div>
 
@@ -409,7 +409,7 @@ export default function Projects() {
                   </div>
                 </div>
                 {/* Big number accent */}
-                <span className="font-display text-[120px] leading-none text-white/5 select-none hidden md:block">
+                <span className="font-display text-[120px] leading-none text-gray-600 select-none hidden md:block">
                   {hundredProjects.length}
                 </span>
               </div>
@@ -428,13 +428,13 @@ export default function Projects() {
                 <div>
                   <h2 className="font-display text-6xl text-white leading-none"
                     style={{ textShadow: '4px 4px 0 #E63946' }}>
-                    HACK<br />ATHONS
+                    HACKATHONS
                   </h2>
-                  <p className="font-body text-xs text-white/30 mt-3 uppercase tracking-widest">
+                  <p className="font-body text-xs text-white/80 mt-3 uppercase tracking-widest">
                     ⚡ {hackathonProjects.length} hackathons · built under pressure
                   </p>
                 </div>
-                <span className="font-display text-[120px] leading-none text-white/5 select-none hidden md:block">
+                <span className="font-display text-[120px] leading-none text-white/50 select-none hidden md:block">
                   {hackathonProjects.length}
                 </span>
               </div>
